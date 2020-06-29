@@ -68,7 +68,7 @@ class BidirectionalSuccess extends GreetState {
 }
 
 class GreetFailure extends GreetState {
-  final Exception exception;
+  final String exception;
 
   const GreetFailure(this.exception);
 

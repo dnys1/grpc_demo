@@ -1,28 +1,14 @@
 import 'dart:async';
 
-import 'package:client/core/models/greet/greet.pbgrpc.dart';
-import 'package:grpc/grpc.dart';
+import 'package:grpc/grpc_connection_interface.dart';
 
-class GreetService {
-  ClientChannel channel;
+import '../models/models.dart';
+
+abstract class GreetServiceBase<C extends ClientChannelBase> {
+  C channel;
   GreetServiceClient client;
 
-  GreetService({ClientChannel channel, GreetServiceClient client}) {
-    this.channel = channel ??
-        ClientChannel(
-          '127.0.0.1',
-          port: 50051,
-          options:
-              const ChannelOptions(credentials: ChannelCredentials.insecure()),
-        );
-    this.client = client ??
-        GreetServiceClient(
-          this.channel,
-          options: CallOptions(
-            timeout: const Duration(seconds: 30),
-          ),
-        );
-  }
+  void init({C channel, GreetServiceClient client});
 
   Future<String> greetOnce(String firstName, String lastName) async {
     final greeting = Greeting()

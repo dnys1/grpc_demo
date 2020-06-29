@@ -10,6 +10,8 @@ import (
 
 	"github.com/dnys1/grpc_demo/server/model/greetpb"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type server struct{}
@@ -21,7 +23,7 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 	lastName := req.GetGreeting().GetLastName()
 
 	if firstName == "" || lastName == "" {
-		return nil, fmt.Errorf("Missing first name or last name")
+		return nil, status.Errorf(codes.InvalidArgument, "Missing first name or last name")
 	}
 
 	return &greetpb.GreetResponse{
@@ -36,7 +38,7 @@ func (*server) GreetMany(req *greetpb.GreetManyRequest, stream greetpb.GreetServ
 	lastName := req.GetGreeting().GetLastName()
 
 	if firstName == "" || lastName == "" {
-		return fmt.Errorf("Missing first name or last name")
+		return status.Errorf(codes.InvalidArgument, "Missing first name or last name")
 	}
 
 	for i := 0; i < 10; i++ {
@@ -66,14 +68,16 @@ func (*server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
 			break
 		}
 		if err != nil {
-			return fmt.Errorf("Error while reading client stream: %v", err)
+			errMsg := fmt.Sprintf("Error while reading client stream: %v", err)
+			log.Println(errMsg)
+			return status.Error(codes.Internal, errMsg)
 		}
 
 		firstName := req.GetGreeting().GetFirstName()
 		lastName := req.GetGreeting().GetLastName()
 
 		if firstName == "" || lastName == "" {
-			return fmt.Errorf("Missing first name or last name")
+			return status.Errorf(codes.InvalidArgument, "Missing first name or last name")
 		}
 
 		newPerson := fmt.Sprintf("%s %s", firstName, lastName)
@@ -99,13 +103,17 @@ func (*server) GreetEveryone(stream greetpb.GreetService_GreetEveryoneServer) er
 			break
 		}
 		if err != nil {
-			errMsg := fmt.Errorf("Error while reading client stream: %v", err)
+			errMsg := fmt.Sprintf("Error while reading client stream: %v", err)
 			log.Println(errMsg)
-			return errMsg
+			return status.Error(codes.Internal, errMsg)
 		}
 
 		firstName := req.GetGreeting().GetFirstName()
 		lastName := req.GetGreeting().GetLastName()
+
+		if firstName == "" || lastName == "" {
+			return status.Errorf(codes.InvalidArgument, "Missing first name or last name")
+		}
 
 		result := fmt.Sprintf("Hello, %s %s, number %d", firstName, lastName, numberOfMsg)
 		numberOfMsg++

@@ -4,16 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import '../../services/greet_service.dart';
+import '../../services/greet_service_base.dart';
 
 part 'greet_event.dart';
 part 'greet_state.dart';
 
 class GreetBloc extends Bloc<GreetEvent, GreetState> {
-  final GreetService _greetService;
+  final GreetServiceBase _greetService;
 
-  GreetBloc({GreetService greetService})
-      : _greetService = greetService ?? GreetService();
+  GreetBloc(this._greetService);
 
   @override
   GreetState get initialState => GreetInitial();
@@ -45,7 +44,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       final result = await _greetService.greetOnce(firstName, lastName);
       yield GreetOnceSuccess(result);
     } catch (e) {
-      yield GreetFailure(e);
+      yield GreetFailure(e.toString());
     }
   }
 
@@ -58,7 +57,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
         yield GreetManySuccess(result);
       }
     } catch (e) {
-      yield GreetFailure(e);
+      yield GreetFailure(e.toString());
     }
   }
 
@@ -91,7 +90,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       final result = await _longGreetCompleter.future;
       yield LongGreetSuccess(result);
     } catch (e) {
-      yield GreetFailure(e);
+      yield GreetFailure(e.toString());
     } finally {
       _longGreetController = null;
       _longGreetCompleter = null;
@@ -114,7 +113,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
           yield BidirectionalSuccess(result);
         }
       } catch (e) {
-        yield GreetFailure(e);
+        yield GreetFailure(e.toString());
       } finally {
         closeBidirectional();
       }
