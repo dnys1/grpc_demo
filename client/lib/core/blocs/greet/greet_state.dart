@@ -1,0 +1,54 @@
+part of 'greet_bloc.dart';
+
+abstract class GreetState extends Equatable {
+  const GreetState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class GreetInitial extends GreetState {}
+
+class GreetLoading extends GreetState {}
+
+class GreetOnceSuccess extends GreetState {
+  final String result;
+
+  const GreetOnceSuccess(this.result);
+
+  @override
+  List<Object> get props => [result];
+
+  @override
+  String toString() {
+    return 'GreetOnceSuccess { result: $result }';
+  }
+}
+
+class GreetManySuccess extends GreetState {
+  final String result;
+
+  const GreetManySuccess(this.result);
+
+  @override
+  List<Object> get props => [result];
+
+  @override
+  String toString() {
+    return 'GreetManySuccess { result: $result }';
+  }
+}
+
+class GreetFailure extends GreetState {
+  final Exception exception;
+
+  const GreetFailure(this.exception);
+
+  @override
+  List<Object> get props => [exception];
+
+  @override
+  String toString() {
+    return 'GreetFailure { exception: $exception }';
+  }
+}

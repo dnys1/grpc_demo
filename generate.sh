@@ -1,0 +1,1 @@
+protoc -I proto --go_out=plugins=grpc:server/model/greetpb --dart_out=grpc:client/lib/core/models/greet proto/greet.proto

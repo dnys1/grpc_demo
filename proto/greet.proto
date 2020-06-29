@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package greet;
+option go_package = "greetpb";
+
+// Greeting is a greeting.
+message Greeting {
+    string first_name = 1;
+    string last_name = 2;
+}
+
+// GreetRequest is a request payload for the Greet RPC.
+message GreetRequest {
+    Greeting greeting = 1;
+}
+
+// GreetResponse is a response from the Greet RPC.
+message GreetResponse {
+    string result = 1;
+}
+
+// GreetManyRequest is a request payload for the GreetMany RPC.
+message GreetManyRequest {
+    Greeting greeting = 1;
+}
+
+// GreetManyResponse is a response from the GreetMany RPC.
+message GreetManyResponse {
+    string result = 1;
+}
+
+service GreetService {
+    // Unary RPC
+    rpc Greet(GreetRequest) returns (GreetResponse) {};
+
+    // Server Streaming RPC
+    rpc GreetMany(GreetManyRequest) returns (stream GreetManyResponse) {};
+}
