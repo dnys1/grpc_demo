@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/blocs/greet/greet_bloc.dart';
 import '../../widgets/greet_form.dart';
 
-class LongGreetView extends StatelessWidget {
+class ClientStreamView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

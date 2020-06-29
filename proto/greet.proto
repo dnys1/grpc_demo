@@ -39,6 +39,16 @@ message LongGreetResponse {
     string result = 1;
 }
 
+// GreetEveryoneRequest is a request payload for the GreetMany RPC.
+message GreetEveryoneRequest {
+    Greeting greeting = 1;
+}
+
+// GreetEveryoneResponse is a response from the GreetMany RPC.
+message GreetEveryoneResponse {
+    string result = 1;
+}
+
 service GreetService {
     // Unary RPC
     rpc Greet(GreetRequest) returns (GreetResponse) {};
@@ -48,4 +58,7 @@ service GreetService {
 
     // Client Streaming RPC
     rpc LongGreet(stream LongGreetRequest) returns (LongGreetResponse) {};
+
+    // Bidirectional Streaming RPC
+    rpc GreetEveryone(stream GreetEveryoneRequest) returns (stream GreetEveryoneResponse) {};
 }

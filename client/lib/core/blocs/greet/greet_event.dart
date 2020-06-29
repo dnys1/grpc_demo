@@ -64,3 +64,23 @@ class LongGreetAdd extends GreetEvent {
 }
 
 class LongGreetClose extends GreetEvent {}
+
+class BidirectionalAdd extends GreetEvent {
+  final String firstName;
+  final String lastName;
+
+  const BidirectionalAdd({
+    @required this.firstName,
+    @required this.lastName,
+  });
+
+  @override
+  List<Object> get props => [firstName, lastName];
+
+  @override
+  String toString() {
+    return 'BidirectionalAdd { firstName: $firstName, lastName: $lastName }';
+  }
+}
+
+class BidirectionalClose extends GreetEvent {}

@@ -30,6 +30,12 @@ class GreetServiceClient extends $grpc.Client {
           ($0.LongGreetRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.LongGreetResponse.fromBuffer(value));
+  static final _$greetEveryone =
+      $grpc.ClientMethod<$0.GreetEveryoneRequest, $0.GreetEveryoneResponse>(
+          '/greet.GreetService/GreetEveryone',
+          ($0.GreetEveryoneRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.GreetEveryoneResponse.fromBuffer(value));
 
   GreetServiceClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -54,6 +60,13 @@ class GreetServiceClient extends $grpc.Client {
       {$grpc.CallOptions options}) {
     final call = $createCall(_$longGreet, request, options: options);
     return $grpc.ResponseFuture(call);
+  }
+
+  $grpc.ResponseStream<$0.GreetEveryoneResponse> greetEveryone(
+      $async.Stream<$0.GreetEveryoneRequest> request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(_$greetEveryone, request, options: options);
+    return $grpc.ResponseStream(call);
   }
 }
 
@@ -82,6 +95,15 @@ abstract class GreetServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LongGreetRequest.fromBuffer(value),
         ($0.LongGreetResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.GreetEveryoneRequest, $0.GreetEveryoneResponse>(
+            'GreetEveryone',
+            greetEveryone,
+            true,
+            true,
+            ($core.List<$core.int> value) =>
+                $0.GreetEveryoneRequest.fromBuffer(value),
+            ($0.GreetEveryoneResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.GreetResponse> greet_Pre(
@@ -100,4 +122,6 @@ abstract class GreetServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.GreetManyRequest request);
   $async.Future<$0.LongGreetResponse> longGreet(
       $grpc.ServiceCall call, $async.Stream<$0.LongGreetRequest> request);
+  $async.Stream<$0.GreetEveryoneResponse> greetEveryone(
+      $grpc.ServiceCall call, $async.Stream<$0.GreetEveryoneRequest> request);
 }

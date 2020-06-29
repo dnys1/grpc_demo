@@ -55,3 +55,17 @@ const LongGreetResponse$json = const {
   ],
 };
 
+const GreetEveryoneRequest$json = const {
+  '1': 'GreetEveryoneRequest',
+  '2': const [
+    const {'1': 'greeting', '3': 1, '4': 1, '5': 11, '6': '.greet.Greeting', '10': 'greeting'},
+  ],
+};
+
+const GreetEveryoneResponse$json = const {
+  '1': 'GreetEveryoneResponse',
+  '2': const [
+    const {'1': 'result', '3': 1, '4': 1, '5': 9, '10': 'result'},
+  ],
+};
+

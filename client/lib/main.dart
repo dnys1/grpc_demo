@@ -1,17 +1,24 @@
-import 'package:client/core/blocs/greet/greet_bloc.dart';
-import 'package:client/core/models/greet/greet.pbgrpc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grpc/grpc.dart';
 
+import 'core/blocs/bloc_delegate.dart';
+import 'core/blocs/controller/controller_bloc.dart';
+import 'core/blocs/greet/greet_bloc.dart';
 import 'ui/views/views.dart';
 
-ClientChannel channel;
-GreetServiceClient client;
-
 void main() {
-  final app = BlocProvider(
-    create: (_) => GreetBloc(),
+  BlocSupervisor.delegate = GrpcBlocDelegate();
+  final app = MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => GreetBloc(),
+      ),
+      BlocProvider(
+        create: (context) => ControllerBloc(
+          greetBloc: BlocProvider.of<GreetBloc>(context),
+        ),
+      ),
+    ],
     child: MyApp(),
   );
   runApp(app);
@@ -27,6 +34,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeView(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

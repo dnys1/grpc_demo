@@ -4,10 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/blocs/greet/greet_bloc.dart';
 
 class GreetForm extends StatefulWidget {
+  final String addLabel;
+  final String submitLabel;
   final Function(String, String) onAdd;
   final Function(String, String) onSubmit;
 
   const GreetForm({
+    this.addLabel,
+    this.submitLabel,
     this.onAdd,
     @required this.onSubmit,
   });
@@ -66,7 +70,7 @@ class _GreetFormState extends State<GreetForm> {
             if (widget.onAdd != null) ...[
               const SizedBox(height: 20),
               RaisedButton(
-                child: Text('Add ($_counter)'),
+                child: Text(widget.addLabel ?? 'Add ($_counter)'),
                 onPressed: () async {
                   if (formKey.currentState.validate()) {
                     widget.onAdd(_firstName, _lastName);
@@ -79,7 +83,7 @@ class _GreetFormState extends State<GreetForm> {
             ],
             const SizedBox(height: 20),
             RaisedButton(
-              child: Text('Submit'),
+              child: Text(widget.submitLabel ?? 'Submit'),
               onPressed: () async {
                 if (formKey.currentState.validate()) {
                   widget.onSubmit(_firstName, _lastName);

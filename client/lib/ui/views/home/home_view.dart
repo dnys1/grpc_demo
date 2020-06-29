@@ -15,21 +15,23 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text('gRPC Demo'),
           bottom: TabBar(
+            isScrollable: true,
             tabs: [
               Tab(child: Text('Unary')),
-              Tab(child: FittedBox(child: Text('Server Stream'))),
-              Tab(child: FittedBox(child: Text('Client Stream'))),
-              // Tab(child: Text('Bidirectional')),
+              Tab(child: Text('Server Stream')),
+              Tab(child: Text('Client Stream')),
+              Tab(child: Text('Bidirectional')),
             ],
           ),
           actions: [
             IconButton(
               icon: Icon(Icons.refresh),
+              tooltip: 'Reset',
               onPressed: () {
                 BlocProvider.of<GreetBloc>(context).add(GreetReset());
               },
@@ -38,9 +40,10 @@ class _HomeViewState extends State<HomeView> {
         ),
         body: TabBarView(
           children: [
-            GreetOnceView(),
-            GreetManyView(),
-            LongGreetView(),
+            UnaryView(),
+            ServerStreamView(),
+            ClientStreamView(),
+            BidirectionalView(),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:async/async.dart';
 import 'package:client/core/models/greet/greet.pbgrpc.dart';
 import 'package:grpc/grpc.dart';
 
@@ -57,5 +56,20 @@ class GreetService {
       return request;
     }));
     return response.result;
+  }
+
+  Stream<String> greetEveryone(Stream<List<String>> stream) {
+    final response = client.greetEveryone(stream.map((name) {
+      final firstName = name[0];
+      final lastName = name[1];
+
+      final greeting = Greeting()
+        ..firstName = firstName
+        ..lastName = lastName;
+      final request = GreetEveryoneRequest()..greeting = greeting;
+
+      return request;
+    }));
+    return response.map((res) => res.result);
   }
 }

@@ -30,6 +30,8 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       yield* _mapLongGreetAddToState(event.firstName, event.lastName);
     } else if (event is LongGreetClose) {
       yield* _mapLongGreetCloseToState();
+    } else if (event is BidirectionalAdd) {
+      yield* _mapBidirectionalAddToState(event.firstName, event.lastName);
     } else if (event is GreetReset) {
       reset();
       yield GreetInitial();
@@ -96,11 +98,46 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
     }
   }
 
+  StreamController<List<String>> bidirectionalController;
+
+  Stream<GreetState> _mapBidirectionalAddToState(
+      String firstName, String lastName) async* {
+    if (bidirectionalController == null) {
+      yield GreetLoading();
+      bidirectionalController = StreamController<List<String>>();
+      bidirectionalController.add([firstName, lastName]);
+      final stream =
+          _greetService.greetEveryone(bidirectionalController.stream);
+      try {
+        await for (var result in stream) {
+          print('Got result $result');
+          yield BidirectionalSuccess(result);
+        }
+      } catch (e) {
+        yield GreetFailure(e);
+      } finally {
+        closeBidirectional();
+      }
+    }
+  }
+
+  void closeBidirectional() {
+    if (bidirectionalController != null) {
+      bidirectionalController.close();
+      bidirectionalController = null;
+    }
+  }
+
   void reset() {
     if (_longGreetController != null) {
       _longGreetController.close();
       _longGreetController = null;
       _longGreetCompleter = null;
+    }
+
+    if (bidirectionalController != null) {
+      bidirectionalController.close();
+      bidirectionalController = null;
     }
   }
 }

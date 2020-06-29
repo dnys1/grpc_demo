@@ -242,3 +242,67 @@ class LongGreetResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+class GreetEveryoneRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GreetEveryoneRequest', package: const $pb.PackageName('greet'), createEmptyInstance: create)
+    ..aOM<Greeting>(1, 'greeting', subBuilder: Greeting.create)
+    ..hasRequiredFields = false
+  ;
+
+  GreetEveryoneRequest._() : super();
+  factory GreetEveryoneRequest() => create();
+  factory GreetEveryoneRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GreetEveryoneRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GreetEveryoneRequest clone() => GreetEveryoneRequest()..mergeFromMessage(this);
+  GreetEveryoneRequest copyWith(void Function(GreetEveryoneRequest) updates) => super.copyWith((message) => updates(message as GreetEveryoneRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GreetEveryoneRequest create() => GreetEveryoneRequest._();
+  GreetEveryoneRequest createEmptyInstance() => create();
+  static $pb.PbList<GreetEveryoneRequest> createRepeated() => $pb.PbList<GreetEveryoneRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GreetEveryoneRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GreetEveryoneRequest>(create);
+  static GreetEveryoneRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Greeting get greeting => $_getN(0);
+  @$pb.TagNumber(1)
+  set greeting(Greeting v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGreeting() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGreeting() => clearField(1);
+  @$pb.TagNumber(1)
+  Greeting ensureGreeting() => $_ensure(0);
+}
+
+class GreetEveryoneResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('GreetEveryoneResponse', package: const $pb.PackageName('greet'), createEmptyInstance: create)
+    ..aOS(1, 'result')
+    ..hasRequiredFields = false
+  ;
+
+  GreetEveryoneResponse._() : super();
+  factory GreetEveryoneResponse() => create();
+  factory GreetEveryoneResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GreetEveryoneResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GreetEveryoneResponse clone() => GreetEveryoneResponse()..mergeFromMessage(this);
+  GreetEveryoneResponse copyWith(void Function(GreetEveryoneResponse) updates) => super.copyWith((message) => updates(message as GreetEveryoneResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static GreetEveryoneResponse create() => GreetEveryoneResponse._();
+  GreetEveryoneResponse createEmptyInstance() => create();
+  static $pb.PbList<GreetEveryoneResponse> createRepeated() => $pb.PbList<GreetEveryoneResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GreetEveryoneResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GreetEveryoneResponse>(create);
+  static GreetEveryoneResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get result => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set result($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResult() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResult() => clearField(1);
+}
+

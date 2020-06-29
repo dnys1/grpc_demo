@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/blocs/greet/greet_bloc.dart';
 import '../../widgets/greet_form.dart';
 
-class GreetOnceView extends StatelessWidget {
+class UnaryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
