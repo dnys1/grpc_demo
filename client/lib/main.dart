@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'core/blocs/bloc_delegate.dart';
-import 'core/blocs/controller/controller_bloc.dart';
 import 'core/blocs/greet/greet_bloc.dart';
-
+import 'core/managers/greet_manager.dart';
 import 'core/services/other/greet_service_other.dart'
     if (dart.library.io) 'core/services/mobile/greet_service_mobile.dart'
     if (dart.library.html) 'core/services/web/greet_service_web.dart';
@@ -13,18 +13,14 @@ import 'ui/views/views.dart';
 
 void main() {
   BlocSupervisor.delegate = GrpcBlocDelegate();
-  final app = MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (context) => GreetBloc(GreetService()..init()),
+  final app = BlocProvider(
+    create: (context) => GreetBloc(GreetService()..init()),
+    child: Provider(
+      create: (context) => GreetManager(
+        greetBloc: BlocProvider.of<GreetBloc>(context),
       ),
-      BlocProvider(
-        create: (context) => ControllerBloc(
-          greetBloc: BlocProvider.of<GreetBloc>(context),
-        ),
-      ),
-    ],
-    child: MyApp(),
+      child: MyApp(),
+    ),
   );
   runApp(app);
 }

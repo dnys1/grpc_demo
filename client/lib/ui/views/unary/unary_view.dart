@@ -5,6 +5,9 @@ import '../../../core/blocs/greet/greet_bloc.dart';
 import '../../widgets/greet_form.dart';
 
 class UnaryView extends StatelessWidget {
+  static const description =
+      'Implementation of a unary RPC. The client sends a static request and receives a static response.';
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -13,7 +16,10 @@ class UnaryView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: const Text(description),
+            ),
             GreetForm(onSubmit: (fname, lname) {
               BlocProvider.of<GreetBloc>(context).add(GreetOnce(
                 firstName: fname,

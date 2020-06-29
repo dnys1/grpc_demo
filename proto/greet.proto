@@ -29,22 +29,22 @@ message GreetManyResponse {
     string result = 1;
 }
 
-// LongGreetRequest is a request payload for the GreetMany RPC.
+// LongGreetRequest is a request payload for the LongGreet RPC.
 message LongGreetRequest {
     Greeting greeting = 1;
 }
 
-// LongGreetResponse is a response from the GreetMany RPC.
+// LongGreetResponse is a response from the LongGreet RPC.
 message LongGreetResponse {
     string result = 1;
 }
 
-// GreetEveryoneRequest is a request payload for the GreetMany RPC.
+// GreetEveryoneRequest is a request payload for the GreetEveryone RPC.
 message GreetEveryoneRequest {
     Greeting greeting = 1;
 }
 
-// GreetEveryoneResponse is a response from the GreetMany RPC.
+// GreetEveryoneResponse is a response from the GreetEveryone RPC.
 message GreetEveryoneResponse {
     string result = 1;
 }

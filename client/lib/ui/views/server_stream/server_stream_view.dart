@@ -11,6 +11,10 @@ class ServerStreamView extends StatefulWidget {
 
 class _ServerStreamViewState extends State<ServerStreamView> {
   final List<String> _responses = [];
+  bool _enabled = true;
+
+  static const description =
+      'Implementation of server-side streaming. The client sends one request and receives a Stream of responses.';
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +24,21 @@ class _ServerStreamViewState extends State<ServerStreamView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
-            GreetForm(onSubmit: (fname, lname) {
-              _responses.clear();
-              BlocProvider.of<GreetBloc>(context).add(GreetMany(
-                firstName: fname,
-                lastName: lname,
-              ));
-            }),
-            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: const Text(description),
+            ),
+            GreetForm(
+              submitEnabled: _enabled,
+              onSubmit: (fname, lname) {
+                _responses.clear();
+                BlocProvider.of<GreetBloc>(context).add(GreetMany(
+                  firstName: fname,
+                  lastName: lname,
+                ));
+              },
+            ),
+            const Spacer(flex: 2),
             Text(
               'Responses (${_responses.length})',
               style: Theme.of(context)
@@ -44,10 +54,12 @@ class _ServerStreamViewState extends State<ServerStreamView> {
                   if (state is GreetManySuccess) {
                     setState(() {
                       _responses.add(state.result);
+                      _enabled = false;
                     });
                   } else if (state is GreetInitial) {
                     setState(() {
                       _responses.clear();
+                      _enabled = true;
                     });
                   }
                 },

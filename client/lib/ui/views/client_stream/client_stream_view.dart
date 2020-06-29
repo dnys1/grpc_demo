@@ -5,6 +5,9 @@ import '../../../core/blocs/greet/greet_bloc.dart';
 import '../../widgets/greet_form.dart';
 
 class ClientStreamView extends StatelessWidget {
+  static const description =
+      'Implementation of client-side streaming. The client sends a Stream of requests, then receives a static response.';
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -13,7 +16,10 @@ class ClientStreamView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: const Text(description),
+            ),
             GreetForm(
               onAdd: (fname, lname) {
                 BlocProvider.of<GreetBloc>(context).add(LongGreetAdd(

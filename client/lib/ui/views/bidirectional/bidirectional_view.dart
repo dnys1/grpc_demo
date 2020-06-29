@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
-import '../../../core/blocs/controller/controller_bloc.dart';
 import '../../../core/blocs/greet/greet_bloc.dart';
+import '../../../core/managers/greet_manager.dart';
 import '../../widgets/greet_form.dart';
 
 class BidirectionalView extends StatefulWidget {
@@ -12,6 +14,10 @@ class BidirectionalView extends StatefulWidget {
 
 class _BidirectionalViewState extends State<BidirectionalView> {
   final List<String> _responses = [];
+  final ScrollController _controller = ScrollController();
+
+  static const description =
+      'Implementation of bidirectional streaming. The client sends a Stream of requests and simultaneously receives a Stream of responses';
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +27,20 @@ class _BidirectionalViewState extends State<BidirectionalView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: const Text(description),
+            ),
             GreetForm(
               onAdd: (fname, lname) {
-                BlocProvider.of<ControllerBloc>(context).add(BidirectionalAdd(
-                  firstName: fname,
-                  lastName: lname,
-                ));
+                context.read<GreetManager>().add(BidirectionalAdd(
+                      firstName: fname,
+                      lastName: lname,
+                    ));
               },
               submitLabel: 'Close',
               onSubmit: (_, __) {
-                BlocProvider.of<ControllerBloc>(context)
-                    .add(BidirectionalClose());
+                context.read<GreetManager>().add(BidirectionalClose());
               },
             ),
             const Spacer(),
@@ -51,6 +59,15 @@ class _BidirectionalViewState extends State<BidirectionalView> {
                     setState(() {
                       _responses.add(state.result);
                     });
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      if (_controller.hasClients) {
+                        _controller.animateTo(
+                          _controller.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.ease,
+                        );
+                      }
+                    });
                   } else if (state is GreetInitial) {
                     setState(() {
                       _responses.clear();
@@ -62,6 +79,7 @@ class _BidirectionalViewState extends State<BidirectionalView> {
                     return Container(
                       height: 100,
                       child: ListView.builder(
+                        controller: _controller,
                         itemCount: _responses.length,
                         itemBuilder: (context, index) {
                           return Text(_responses[index]);

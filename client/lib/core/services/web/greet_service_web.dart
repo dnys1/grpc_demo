@@ -17,4 +17,14 @@ class GreetService extends GreetServiceBase<GrpcWebClientChannel> {
           ),
         );
   }
+
+  @override
+  Future<String> longGreet(Stream<List<String>> stream) {
+    throw UnsupportedError('Client-side streaming not yet supported on web.');
+  }
+
+  @override
+  Stream<String> greetEveryone(Stream<List<String>> stream) {
+    throw UnsupportedError('Bidirectional streaming not yet supported on web.');
+  }
 }

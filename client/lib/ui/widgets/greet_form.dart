@@ -6,12 +6,16 @@ import '../../core/blocs/greet/greet_bloc.dart';
 class GreetForm extends StatefulWidget {
   final String addLabel;
   final String submitLabel;
+  final bool addEnabled;
+  final bool submitEnabled;
   final Function(String, String) onAdd;
   final Function(String, String) onSubmit;
 
   const GreetForm({
     this.addLabel,
     this.submitLabel,
+    this.addEnabled = true,
+    this.submitEnabled = true,
     this.onAdd,
     @required this.onSubmit,
   });
@@ -71,27 +75,31 @@ class _GreetFormState extends State<GreetForm> {
               const SizedBox(height: 20),
               RaisedButton(
                 child: Text(widget.addLabel ?? 'Add ($_counter)'),
-                onPressed: () async {
-                  if (formKey.currentState.validate()) {
-                    widget.onAdd(_firstName, _lastName);
-                    setState(() {
-                      _counter++;
-                    });
-                  }
-                },
+                onPressed: widget.addEnabled
+                    ? () async {
+                        if (formKey.currentState.validate()) {
+                          widget.onAdd(_firstName, _lastName);
+                          setState(() {
+                            _counter++;
+                          });
+                        }
+                      }
+                    : null,
               ),
             ],
             const SizedBox(height: 20),
             RaisedButton(
               child: Text(widget.submitLabel ?? 'Submit'),
-              onPressed: () async {
-                if (formKey.currentState.validate()) {
-                  widget.onSubmit(_firstName, _lastName);
-                  setState(() {
-                    _counter = 0;
-                  });
-                }
-              },
+              onPressed: widget.submitEnabled
+                  ? () async {
+                      if (formKey.currentState.validate()) {
+                        widget.onSubmit(_firstName, _lastName);
+                        setState(() {
+                          _counter = 0;
+                        });
+                      }
+                    }
+                  : null,
             ),
           ],
         ),
