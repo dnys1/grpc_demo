@@ -26,6 +26,13 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       yield* _mapGreetOnceToState(event.firstName, event.lastName);
     } else if (event is GreetMany) {
       yield* _mapGreetManyToState(event.firstName, event.lastName);
+    } else if (event is LongGreetAdd) {
+      yield* _mapLongGreetAddToState(event.firstName, event.lastName);
+    } else if (event is LongGreetClose) {
+      yield* _mapLongGreetCloseToState();
+    } else if (event is GreetReset) {
+      reset();
+      yield GreetInitial();
     }
   }
 
@@ -50,6 +57,50 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       }
     } catch (e) {
       yield GreetFailure(e);
+    }
+  }
+
+  StreamController<List<String>> _longGreetController;
+  Completer<String> _longGreetCompleter;
+
+  Stream<GreetState> _mapLongGreetAddToState(
+      String firstName, String lastName) async* {
+    if (_longGreetController == null) {
+      yield GreetLoading();
+      _longGreetController = StreamController<List<String>>();
+      _longGreetCompleter = Completer<String>();
+      _greetService
+          .longGreet(_longGreetController.stream)
+          .then((result) => _longGreetCompleter.complete(result))
+          .catchError((err) {
+        _longGreetCompleter.completeError(err);
+        add(LongGreetClose());
+      });
+    }
+    _longGreetController.add([firstName, lastName]);
+  }
+
+  Stream<GreetState> _mapLongGreetCloseToState() async* {
+    if (_longGreetController == null) {
+      return;
+    }
+    _longGreetController.close();
+    try {
+      final result = await _longGreetCompleter.future;
+      yield LongGreetSuccess(result);
+    } catch (e) {
+      yield GreetFailure(e);
+    } finally {
+      _longGreetController = null;
+      _longGreetCompleter = null;
+    }
+  }
+
+  void reset() {
+    if (_longGreetController != null) {
+      _longGreetController.close();
+      _longGreetController = null;
+      _longGreetCompleter = null;
     }
   }
 }

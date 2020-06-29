@@ -41,3 +41,17 @@ const GreetManyResponse$json = const {
   ],
 };
 
+const LongGreetRequest$json = const {
+  '1': 'LongGreetRequest',
+  '2': const [
+    const {'1': 'greeting', '3': 1, '4': 1, '5': 11, '6': '.greet.Greeting', '10': 'greeting'},
+  ],
+};
+
+const LongGreetResponse$json = const {
+  '1': 'LongGreetResponse',
+  '2': const [
+    const {'1': 'result', '3': 1, '4': 1, '5': 9, '10': 'result'},
+  ],
+};
+

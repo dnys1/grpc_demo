@@ -24,6 +24,12 @@ class GreetServiceClient extends $grpc.Client {
           ($0.GreetManyRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.GreetManyResponse.fromBuffer(value));
+  static final _$longGreet =
+      $grpc.ClientMethod<$0.LongGreetRequest, $0.LongGreetResponse>(
+          '/greet.GreetService/LongGreet',
+          ($0.LongGreetRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.LongGreetResponse.fromBuffer(value));
 
   GreetServiceClient($grpc.ClientChannel channel, {$grpc.CallOptions options})
       : super(channel, options: options);
@@ -41,6 +47,13 @@ class GreetServiceClient extends $grpc.Client {
     final call = $createCall(_$greetMany, $async.Stream.fromIterable([request]),
         options: options);
     return $grpc.ResponseStream(call);
+  }
+
+  $grpc.ResponseFuture<$0.LongGreetResponse> longGreet(
+      $async.Stream<$0.LongGreetRequest> request,
+      {$grpc.CallOptions options}) {
+    final call = $createCall(_$longGreet, request, options: options);
+    return $grpc.ResponseFuture(call);
   }
 }
 
@@ -62,6 +75,13 @@ abstract class GreetServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.GreetManyRequest.fromBuffer(value),
         ($0.GreetManyResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.LongGreetRequest, $0.LongGreetResponse>(
+        'LongGreet',
+        longGreet,
+        true,
+        false,
+        ($core.List<$core.int> value) => $0.LongGreetRequest.fromBuffer(value),
+        ($0.LongGreetResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.GreetResponse> greet_Pre(
@@ -78,4 +98,6 @@ abstract class GreetServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.GreetRequest request);
   $async.Stream<$0.GreetManyResponse> greetMany(
       $grpc.ServiceCall call, $0.GreetManyRequest request);
+  $async.Future<$0.LongGreetResponse> longGreet(
+      $grpc.ServiceCall call, $async.Stream<$0.LongGreetRequest> request);
 }

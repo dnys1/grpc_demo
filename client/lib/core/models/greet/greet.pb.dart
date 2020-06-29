@@ -178,3 +178,67 @@ class GreetManyResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+class LongGreetRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LongGreetRequest', package: const $pb.PackageName('greet'), createEmptyInstance: create)
+    ..aOM<Greeting>(1, 'greeting', subBuilder: Greeting.create)
+    ..hasRequiredFields = false
+  ;
+
+  LongGreetRequest._() : super();
+  factory LongGreetRequest() => create();
+  factory LongGreetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LongGreetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  LongGreetRequest clone() => LongGreetRequest()..mergeFromMessage(this);
+  LongGreetRequest copyWith(void Function(LongGreetRequest) updates) => super.copyWith((message) => updates(message as LongGreetRequest));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LongGreetRequest create() => LongGreetRequest._();
+  LongGreetRequest createEmptyInstance() => create();
+  static $pb.PbList<LongGreetRequest> createRepeated() => $pb.PbList<LongGreetRequest>();
+  @$core.pragma('dart2js:noInline')
+  static LongGreetRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LongGreetRequest>(create);
+  static LongGreetRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Greeting get greeting => $_getN(0);
+  @$pb.TagNumber(1)
+  set greeting(Greeting v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGreeting() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGreeting() => clearField(1);
+  @$pb.TagNumber(1)
+  Greeting ensureGreeting() => $_ensure(0);
+}
+
+class LongGreetResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo('LongGreetResponse', package: const $pb.PackageName('greet'), createEmptyInstance: create)
+    ..aOS(1, 'result')
+    ..hasRequiredFields = false
+  ;
+
+  LongGreetResponse._() : super();
+  factory LongGreetResponse() => create();
+  factory LongGreetResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LongGreetResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  LongGreetResponse clone() => LongGreetResponse()..mergeFromMessage(this);
+  LongGreetResponse copyWith(void Function(LongGreetResponse) updates) => super.copyWith((message) => updates(message as LongGreetResponse));
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static LongGreetResponse create() => LongGreetResponse._();
+  LongGreetResponse createEmptyInstance() => create();
+  static $pb.PbList<LongGreetResponse> createRepeated() => $pb.PbList<LongGreetResponse>();
+  @$core.pragma('dart2js:noInline')
+  static LongGreetResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LongGreetResponse>(create);
+  static LongGreetResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get result => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set result($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasResult() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearResult() => clearField(1);
+}
+

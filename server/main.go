@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"time"
@@ -29,7 +30,7 @@ func (*server) Greet(ctx context.Context, req *greetpb.GreetRequest) (*greetpb.G
 }
 
 func (*server) GreetMany(req *greetpb.GreetManyRequest, stream greetpb.GreetService_GreetManyServer) error {
-	fmt.Printf("GreetMany invoked with %v\n", req)
+	log.Printf("GreetMany invoked with %v\n", req)
 
 	firstName := req.GetGreeting().GetFirstName()
 	lastName := req.GetGreeting().GetLastName()
@@ -52,6 +53,39 @@ func (*server) GreetMany(req *greetpb.GreetManyRequest, stream greetpb.GreetServ
 	})
 
 	return nil
+}
+
+func (*server) LongGreet(stream greetpb.GreetService_LongGreetServer) error {
+	log.Println("LongGreet invoked")
+
+	result := ""
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Error while reading client stream: %v", err)
+		}
+
+		firstName := req.GetGreeting().GetFirstName()
+		lastName := req.GetGreeting().GetLastName()
+
+		if firstName == "" || lastName == "" {
+			return fmt.Errorf("Missing first name or last name")
+		}
+
+		newPerson := fmt.Sprintf("%s %s", firstName, lastName)
+
+		log.Printf("LongGreet received %s\n", newPerson)
+
+		result = result + fmt.Sprintf("Hello, %s!\n", newPerson)
+	}
+
+	return stream.SendAndClose(&greetpb.LongGreetResponse{
+		Result: result,
+	})
 }
 
 func newServer() *server {

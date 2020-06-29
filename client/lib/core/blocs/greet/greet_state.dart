@@ -39,6 +39,20 @@ class GreetManySuccess extends GreetState {
   }
 }
 
+class LongGreetSuccess extends GreetState {
+  final String result;
+
+  const LongGreetSuccess(this.result);
+
+  @override
+  List<Object> get props => [result];
+
+  @override
+  String toString() {
+    return 'LongGreetSuccess { result: $result }';
+  }
+}
+
 class GreetFailure extends GreetState {
   final Exception exception;
 
