@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 
+import '../../config/config.dart';
 import '../../models/models.dart';
 import '../greet_service_base.dart';
 
@@ -8,8 +9,8 @@ class GreetService extends GreetServiceBase<ClientChannel> {
   void init({ClientChannel channel, GreetServiceClient client}) {
     this.channel = channel ??
         ClientChannel(
-          '127.0.0.1',
-          port: 50051,
+          Config.host,
+          port: Config.port,
           options:
               const ChannelOptions(credentials: ChannelCredentials.insecure()),
         );

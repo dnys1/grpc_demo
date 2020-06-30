@@ -1,14 +1,16 @@
 import 'package:grpc/grpc_connection_interface.dart';
 import 'package:grpc/grpc_web.dart';
 
+import '../../config/config.dart';
 import '../../models/models.dart';
 import '../greet_service_base.dart';
 
 class GreetService extends GreetServiceBase<GrpcWebClientChannel> {
   @override
   void init({GrpcWebClientChannel channel, GreetServiceClient client}) {
-    this.channel =
-        channel ?? GrpcWebClientChannel.xhr(Uri.parse('http://127.0.0.1:8080'));
+    this.channel = channel ??
+        GrpcWebClientChannel.xhr(
+            Uri.parse('http://${Config.host}:${Config.port}'));
     this.client = client ??
         GreetServiceClient(
           this.channel,
