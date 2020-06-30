@@ -46,7 +46,6 @@ class _GreetFormState extends State<GreetForm> {
         child: Column(
           children: [
             TextFormField(
-              autofocus: true,
               onChanged: (fname) => _firstName = fname,
               validator: (fname) {
                 if (fname.isEmpty) {

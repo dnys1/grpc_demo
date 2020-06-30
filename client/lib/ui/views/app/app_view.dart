@@ -4,14 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/blocs/greet/greet_bloc.dart';
 import '../views.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView();
+class AppView extends StatelessWidget {
+  const AppView();
 
-  @override
-  _HomeViewState createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

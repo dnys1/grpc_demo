@@ -1,4 +1,4 @@
-export 'home/home_view.dart';
+export 'app/app_view.dart';
 
 // Tabs
 export 'unary/unary_view.dart';
