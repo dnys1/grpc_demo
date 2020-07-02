@@ -53,10 +53,10 @@ class LongGreetSuccess extends GreetState {
   }
 }
 
-class BidirectionalSuccess extends GreetState {
+class GreetEveryoneSuccess extends GreetState {
   final String result;
 
-  const BidirectionalSuccess(this.result);
+  const GreetEveryoneSuccess(this.result);
 
   @override
   List<Object> get props => [result];

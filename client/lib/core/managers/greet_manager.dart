@@ -8,13 +8,12 @@ class GreetManager {
   const GreetManager({@required this.greetBloc});
 
   void add(GreetEvent event) {
-    if (event is BidirectionalAdd) {
+    if (event is GreetEveryoneAdd) {
       if (greetBloc.bidirectionalController != null) {
-        greetBloc.bidirectionalController
-            .add([event.firstName, event.lastName]);
+        greetBloc.bidirectionalController.add([event.firstName, event.lastName]);
         return;
       }
-    } else if (event is BidirectionalClose) {
+    } else if (event is GreetEveryoneClose) {
       greetBloc.closeBidirectional();
       return;
     }

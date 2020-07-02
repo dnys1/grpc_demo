@@ -65,11 +65,11 @@ class LongGreetAdd extends GreetEvent {
 
 class LongGreetClose extends GreetEvent {}
 
-class BidirectionalAdd extends GreetEvent {
+class GreetEveryoneAdd extends GreetEvent {
   final String firstName;
   final String lastName;
 
-  const BidirectionalAdd({
+  const GreetEveryoneAdd({
     @required this.firstName,
     @required this.lastName,
   });
@@ -83,4 +83,4 @@ class BidirectionalAdd extends GreetEvent {
   }
 }
 
-class BidirectionalClose extends GreetEvent {}
+class GreetEveryoneClose extends GreetEvent {}

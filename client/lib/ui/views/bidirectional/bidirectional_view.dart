@@ -31,14 +31,14 @@ class _BidirectionalViewState extends State<BidirectionalView> {
           ),
           GreetForm(
             onAdd: (fname, lname) {
-              context.read<GreetManager>().add(BidirectionalAdd(
+              context.read<GreetManager>().add(GreetEveryoneAdd(
                     firstName: fname,
                     lastName: lname,
                   ));
             },
             submitLabel: 'Close',
             onSubmit: (_, __) {
-              context.read<GreetManager>().add(BidirectionalClose());
+              context.read<GreetManager>().add(GreetEveryoneClose());
             },
           ),
           const SizedBox(height: 100),
@@ -53,7 +53,7 @@ class _BidirectionalViewState extends State<BidirectionalView> {
           Container(
             child: BlocConsumer<GreetBloc, GreetState>(
               listener: (context, state) {
-                if (state is BidirectionalSuccess) {
+                if (state is GreetEveryoneSuccess) {
                   setState(() {
                     _responses.add(state.result);
                   });
@@ -73,7 +73,7 @@ class _BidirectionalViewState extends State<BidirectionalView> {
                 }
               },
               builder: (context, state) {
-                if (state is BidirectionalSuccess) {
+                if (state is GreetEveryoneSuccess) {
                   return Container(
                     height: 100,
                     child: ListView.builder(

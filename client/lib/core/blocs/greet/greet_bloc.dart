@@ -29,7 +29,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       yield* _mapLongGreetAddToState(event.firstName, event.lastName);
     } else if (event is LongGreetClose) {
       yield* _mapLongGreetCloseToState();
-    } else if (event is BidirectionalAdd) {
+    } else if (event is GreetEveryoneAdd) {
       yield* _mapBidirectionalAddToState(event.firstName, event.lastName);
     } else if (event is GreetReset) {
       reset();
@@ -37,8 +37,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
     }
   }
 
-  Stream<GreetState> _mapGreetOnceToState(
-      String firstName, String lastName) async* {
+  Stream<GreetState> _mapGreetOnceToState(String firstName, String lastName) async* {
     yield GreetLoading();
     try {
       final result = await _greetService.greetOnce(firstName, lastName);
@@ -48,8 +47,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
     }
   }
 
-  Stream<GreetState> _mapGreetManyToState(
-      String firstName, String lastName) async* {
+  Stream<GreetState> _mapGreetManyToState(String firstName, String lastName) async* {
     yield GreetLoading();
     try {
       final responses = _greetService.greetMany(firstName, lastName);
@@ -64,8 +62,7 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
   StreamController<List<String>> _longGreetController;
   Completer<String> _longGreetCompleter;
 
-  Stream<GreetState> _mapLongGreetAddToState(
-      String firstName, String lastName) async* {
+  Stream<GreetState> _mapLongGreetAddToState(String firstName, String lastName) async* {
     if (_longGreetController == null) {
       yield GreetLoading();
       _longGreetController = StreamController<List<String>>();
@@ -105,12 +102,10 @@ class GreetBloc extends Bloc<GreetEvent, GreetState> {
       yield GreetLoading();
       bidirectionalController = StreamController<List<String>>();
       bidirectionalController.add([firstName, lastName]);
-      final stream =
-          _greetService.greetEveryone(bidirectionalController.stream);
+      final stream = _greetService.greetEveryone(bidirectionalController.stream);
       try {
         await for (var result in stream) {
-          print('Got result $result');
-          yield BidirectionalSuccess(result);
+          yield GreetEveryoneSuccess(result);
         }
       } catch (e) {
         yield GreetFailure(e.toString());
