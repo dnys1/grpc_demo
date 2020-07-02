@@ -47,7 +47,7 @@ ngrok tcp 50051
 
 ![ngrok output](./assets/ngrok.png)
 
-After running this command, you'll need to copy the `Forwarding` address to [client/lib/config/config.dart](./client/lib/config/config.dart) (lines 13 and 24). For Flutter Web, the port is always `8080` because its traffic is routed through the Envoy proxy, explained below.
+After running this command, you'll need to copy the `Forwarding` address to [client/lib/core/config/config.dart](./client/lib/core/config/config.dart) (lines 13 and 24). For Flutter Web, the port is always `8080` because its traffic is routed through the Envoy proxy, explained below.
 
 ## Running on the Web
 
