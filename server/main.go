@@ -43,6 +43,7 @@ func (*server) GreetMany(req *greetpb.GreetManyRequest, stream greetpb.GreetServ
 
 	for i := 0; i < 10; i++ {
 		result := fmt.Sprintf("Hello, %s %s, number %d", firstName, lastName, i)
+		log.Printf("Sending '%s' to client\n", result)
 		res := &greetpb.GreetManyResponse{
 			Result: result,
 		}
@@ -117,6 +118,8 @@ func (*server) GreetEveryone(stream greetpb.GreetService_GreetEveryoneServer) er
 
 		result := fmt.Sprintf("Hello, %s %s, number %d", firstName, lastName, numberOfMsg)
 		numberOfMsg++
+
+		log.Printf("GreetEveryone received %s\n", result)
 
 		err = stream.Send(&greetpb.GreetEveryoneResponse{
 			Result: result,
