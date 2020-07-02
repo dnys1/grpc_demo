@@ -6,13 +6,12 @@ import '../greet_service_base.dart';
 
 class GreetService extends GreetServiceBase<ClientChannel> {
   @override
-  void init({ClientChannel channel, GreetServiceClient client}) {
+  void init({ClientChannel channel, GreetServiceClient client}) async {
     this.channel = channel ??
         ClientChannel(
-          Config.host,
-          port: Config.port,
-          options:
-              const ChannelOptions(credentials: ChannelCredentials.insecure()),
+          await Config.host,
+          port: await Config.port,
+          options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
         );
     this.client = client ??
         GreetServiceClient(

@@ -97,6 +97,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  flutter_is_emulator:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "196d1b5ffdae04a74864bde432445b30776be46a"
+      url: "https://github.com/g123k/flutter_is_emulator.git"
+    source: git
+    version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -249,4 +258,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.16.0 <2.0.0"
