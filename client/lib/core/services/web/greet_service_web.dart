@@ -7,10 +7,10 @@ import '../greet_service_base.dart';
 
 class GreetService extends GreetServiceBase<GrpcWebClientChannel> {
   @override
-  void init({GrpcWebClientChannel channel, GreetServiceClient client}) {
-    this.channel = channel ??
-        GrpcWebClientChannel.xhr(
-            Uri.parse('http://${Config.host}:${Config.port}'));
+  void init({GrpcWebClientChannel channel, GreetServiceClient client}) async {
+    final host = await Config.host;
+    final port = await Config.port;
+    this.channel = channel ?? GrpcWebClientChannel.xhr(Uri.parse('http://$host:$port'));
     this.client = client ??
         GreetServiceClient(
           this.channel,
