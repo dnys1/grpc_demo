@@ -1,13 +1,8 @@
-FROM golang:1.14.4-alpine
+FROM alpine:3.12
 
-WORKDIR /go/src/github.com/dnys1/grpc_demo
-
-COPY go.mod .
-COPY go.sum .
-COPY server ./server/
-
-RUN cd server && go install
+COPY ./build/server .
+RUN chmod +x ./server
 
 EXPOSE 50051
 
-CMD ["server"]
+CMD ["./server"]

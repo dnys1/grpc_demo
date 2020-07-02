@@ -1,0 +1,13 @@
+version: '2'
+services:
+    greet_service:
+        image: dillonnys/grpc-server:1.0.0
+        ports: 
+            - "50051:50051"
+    web_proxy:
+        image: envoyproxy/envoy:v1.14.1
+        ports:
+            - "8080:8080"
+            - "9901:9901"
+        volumes:
+            - ./envoy.yaml:/etc/envoy/envoy.yaml

@@ -11,23 +11,13 @@ Demonstration of the gRPC protocol with a Go server and a Flutter client.
 ## Running the Demo
 ### Start Server
 
-To start the server (requires [Go](https://golang.org) installation):
+To start the server:
 
 ```
-go run server/main.go
+docker-compose up
 ```
 
-or, using Docker:
-
-```
-docker run -it -p 50051:50051 dillonnys/grpc-server:0.0.1
-```
-
-*And if running the Flutter Web client, also start the Envoy proxy (requires Docker):*
-
-```
-./start_proxy.sh
-```
+This will launch the gRPC server as well as the Envoy proxy required to run the demo on Flutter Web (explained below).
 
 ### Start Client
 
@@ -47,10 +37,10 @@ ngrok tcp 50051
 
 ![ngrok output](./assets/ngrok.png)
 
-After running this command, you'll need to copy the `Forwarding` address to [client/lib/core/config/config.dart](./client/lib/core/config/config.dart) (lines 13 and 24). For Flutter Web, the port is always `8080` because its traffic is routed through the Envoy proxy, explained below.
+After running this command, you'll need to copy the `Forwarding` address to [client/lib/core/config/config.dart](./client/lib/core/config/config.dart) (lines 13 and 24). For Flutter Web, the port is always `8080` because its traffic is routed through the Envoy proxy.
 
 ## Running on the Web
 
-In order to use gRPC on the web, the [grpc-web](https://github.com/grpc/grpc-web) library is used. Currently, only unary and client-side streaming are supported. Moreover, an intermediate proxy is required to convert HTTP/2 requests and responses to HTTP/1 for the browser.
+In order to use gRPC on the web, the [grpc-web](https://github.com/grpc/grpc-web) library is used. Currently, only unary and server-side streaming are supported. Moreover, an intermediate proxy is required to convert HTTP/2 requests and responses to HTTP/1 for the browser. For more information, see [this](https://grpc.io/blog/state-of-grpc-web/) blog post.
 
 ![grpc-web](https://grpc.io/img/grpc-web-proxy.png)
