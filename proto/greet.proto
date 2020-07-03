@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package greet;
-option go_package = "greetpb";
+option go_package = "github.com/dnys1/grpc_demo/server/model/greetpb";
 
 // Greeting is a greeting.
 message Greeting {
