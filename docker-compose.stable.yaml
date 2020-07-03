@@ -1,10 +1,7 @@
 version: "3.7"
 services:
     greet_service:
-        image: dillonnys/grpc-server:latest
-        build:
-            context: .
-            dockerfile: Dockerfile
+        image: dillonnys/grpc-server:v1.0.1
         ports: 
             - "50051:50051"
     web_proxy:
